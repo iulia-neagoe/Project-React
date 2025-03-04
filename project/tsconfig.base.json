@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@project/components": ["libs/components/src/index.ts"]
+      "@project/components": ["libs/components/src/index.ts"],
+      "@project/models": ["libs/models/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
