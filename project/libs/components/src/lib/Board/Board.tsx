@@ -67,12 +67,12 @@
 
 import { useEffect, useState } from 'react';
 import styles from './Board.module.css';
-import { ISquareProps, Square } from '../Square/Square';
-import { Board, Player, Values } from '@project/models';
+import { Square } from '../Square/Square';
+import { Board, Player, Value } from '@project/models';
 
 export function BoardComponent() {
   const [board, setBoard] = useState<Board>();
-  const [turn, setTurn] = useState<Values>(Values.X);
+  const [turn, setTurn] = useState<Value>(Value.X);
 
   useEffect(() => {
     generateBoard();
@@ -89,14 +89,15 @@ export function BoardComponent() {
       values: valuescopy,
     };
     setBoard(newboard);
-
-    setTurn(turn === Values.X ? Values.O : Values.X);
+    const winner = calculateWinner(newboard.values);
+    console.log(winner);
+    setTurn(turn === Value.X ? Value.O : Value.X);
   }
 
   function generateBoard() {
-    const generatedSquares: Values[] = [];
+    const generatedSquares: Value[] = [];
     for (let i = 0; i < 9; i++) {
-      generatedSquares.push(Values.Empty);
+      generatedSquares.push(Value.Empty);
     }
     const board: Board = {
       values: generatedSquares,
@@ -104,32 +105,36 @@ export function BoardComponent() {
 
     setBoard(board);
   }
-  // function calculateWinner(squares:ISquareProps){
-  //   const lines = [
-  //     [0, 1, 2],
-  //     [3, 4, 5],
-  //     [6, 7, 8],
-  //     [0, 3, 6],
-  //     [1, 4, 7],
-  //     [2, 5, 8],
-  //     [0, 4, 8],
-  //     [2, 4, 6],
-  //   ];
-  // for ( let i= 0; i< lines.length; i++){
-  //   const [a,b,c]= lines[i];
-  //   if(squares[a] == squares[b]==squares[c]){
-  //     return squares[a]
-  //   }
-  // }
-  // return null;
-  // }
+  function calculateWinner(values: Value[]) {
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
+      if (
+        values[a] === values[b] &&
+        values[a] === values[c] &&
+        values[a] !== Value.Empty
+      ) {
+        return Value[values[a]];
+      }
+    }
+    return null;
+  }
 
   return (
     <div className={styles.board}>
-      {board?.values.map((value: Values, index) => {
+      {board?.values.map((value: Value, index) => {
         return (
           <Square
-            value={value !== Values.Empty ? Values[value] : ''}
+            value={value !== Value.Empty ? Value[value] : ''}
             onSquareClick={() => squareClick(index)}
           ></Square>
         );

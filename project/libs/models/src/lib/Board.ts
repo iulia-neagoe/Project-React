@@ -1,5 +1,5 @@
-import { Values } from './Values';
+import { Value } from './Values';
 
 export interface Board {
-  values: Values[];
+  values: Value[];
 }

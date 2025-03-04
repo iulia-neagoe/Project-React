@@ -1,4 +1,4 @@
-export enum Values {
+export enum Value {
   X,
   O,
   Empty,
