@@ -1,0 +1,14 @@
+/*
+ * Replace this with your own classes
+ *
+ * e.g.
+ * .container {
+ * }
+*/
+.board{
+    display:grid;
+    grid-template-columns: repeat(3 , 50px);
+    column-gap: 5px;
+    row-gap: 5px;
+    margin-bottom: 20px;
+}
