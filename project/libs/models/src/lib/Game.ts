@@ -2,7 +2,7 @@ import { Board } from './Board';
 import { Player } from './Player';
 
 export interface Game {
-  id: number;
+  id: string;
   date: Date;
   player1: Player;
   player2: Player;

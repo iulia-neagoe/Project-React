@@ -1,0 +1,15 @@
+/*
+ * Replace this with your own classes
+ *
+ * e.g.
+ * .container {
+ * }
+*/
+input{
+size:20px;
+margin:10px;
+height: 20px;
+display:grid;
+width: 200px;
+font-size: 20px;
+}

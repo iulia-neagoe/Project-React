@@ -70,19 +70,26 @@ import styles from './Board.module.css';
 import { Square } from '../Square/Square';
 import { Board, Player, Value } from '@project/models';
 
-export function BoardComponent() {
+interface IBoardComponentProps {
+  onGameFinish: (value: Value) => void;
+}
+export function BoardComponent(props: IBoardComponentProps) {
   const [board, setBoard] = useState<Board>();
   const [turn, setTurn] = useState<Value>(Value.X);
+  const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
     generateBoard();
   }, []);
 
   function squareClick(index: number) {
-    if (!board) {
+    if (!board || isComplete) {
       return;
     }
     const valuescopy = [...board.values];
+    if (valuescopy[index] !== Value.Empty) {
+      return;
+    }
     valuescopy[index] = turn;
 
     const newboard: Board = {
@@ -90,7 +97,6 @@ export function BoardComponent() {
     };
     setBoard(newboard);
     const winner = calculateWinner(newboard.values);
-    console.log(winner);
     setTurn(turn === Value.X ? Value.O : Value.X);
   }
 
@@ -123,6 +129,8 @@ export function BoardComponent() {
         values[a] === values[c] &&
         values[a] !== Value.Empty
       ) {
+        props.onGameFinish(values[a]);
+        setIsComplete(true);
         return Value[values[a]];
       }
     }
@@ -134,6 +142,7 @@ export function BoardComponent() {
       {board?.values.map((value: Value, index) => {
         return (
           <Square
+            key={index}
             value={value !== Value.Empty ? Value[value] : ''}
             onSquareClick={() => squareClick(index)}
           ></Square>

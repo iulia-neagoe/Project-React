@@ -1,8 +1,8 @@
-import { BoardComponent } from '@project/components';
+import { BoardComponent, GameComponent } from '@project/components';
 export function App() {
   return (
     <div>
-      <BoardComponent></BoardComponent>
+      <GameComponent></GameComponent>
     </div>
   );
 }
