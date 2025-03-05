@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@trimbleinc/modus-react-bootstrap": "^1.2.4",
     "uuid": "^11.1.0"
   }
 }
