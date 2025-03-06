@@ -3,7 +3,7 @@
 import { Button, ListGroupItem } from '@trimbleinc/modus-react-bootstrap';
 import { AddPlace, ListPlace, PlaceComponent } from '@project/components';
 export function App() {
-  return <AddPlace></AddPlace>;
+  return <ListPlace></ListPlace>;
 }
 
 export default App;

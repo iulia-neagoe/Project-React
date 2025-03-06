@@ -4,6 +4,7 @@ import styles from './ListPlace.module.css';
 import { Place } from '@project/models';
 import { Button } from '@trimbleinc/modus-react-bootstrap';
 import { AddPlace } from '../AddPlace/AddPlace';
+import { title } from 'process';
 
 export function ListPlace() {
   const [places, setPlaces] = useState<Place[]>([
@@ -24,28 +25,63 @@ export function ListPlace() {
       rating: 5,
     },
   ]);
+  const [showAddPlace, setShowAddPlace] = useState(false);
+  const clickAddPlace = () => {
+    setShowAddPlace(true);
+  };
 
   return (
     <>
       {places.map((place) => {
         return <PlaceComponent place={place}></PlaceComponent>;
       })}
-      <Button
-      //   onClick={() => {
-      //     const listCopy = [...places];
-      //     listCopy.push({
-      //       title: 'Romania',
-      //       dateStart: new Date(),
-      //       dateEnd: new Date('2024-07-12'),
-      //       description: 'Bucuresti',
-      //       image: undefined,
-      //       rating: 3,
-      //     });
-      //     setPlaces(listCopy);
-      //   }}
-      >
-        Add Place
-      </Button>
+      <div>
+        <Button
+          //   onClick={() => {
+          //     const listCopy = [...places];
+          //     listCopy.push({
+          //       title: 'Romania',
+          //       dateStart: new Date(),
+          //       dateEnd: new Date('2024-07-12'),
+          //       description: 'Bucuresti',
+          //       image: undefined,
+          //       rating: 3,
+          //     });
+          //     setPlaces(listCopy);
+          //   }}
+          onClick={clickAddPlace}
+        >
+          Add Place
+        </Button>
+        {showAddPlace && (
+          <AddPlace
+            close={() => {
+              setShowAddPlace(false);
+            }}
+            save={(
+              title: string,
+              description: string,
+              dateStart: Date,
+              dateEnd: Date,
+              image: string,
+              rating: number
+            ) => {
+              const place = {
+                title: title,
+                description: description,
+                dateStart: dateStart,
+                dateEnd: dateEnd,
+                image: image,
+                rating: rating,
+              };
+
+              const placesCopy = [...places];
+              placesCopy.push(place);
+              setPlaces(placesCopy);
+            }}
+          />
+        )}
+      </div>
     </>
   );
 }

@@ -1,11 +1,7 @@
 import Card from '@trimbleinc/modus-react-bootstrap/esm/Card';
-import styles from './Place.module.css';
 import { Place } from '@project/models';
-import { useState } from 'react';
 import { RatingComponent } from '../Rating/Rating';
-import { ModusDatePicker } from '@trimble-oss/modus-react-components';
-import { Form } from '@trimbleinc/modus-react-bootstrap';
-import DatePicker from 'react-datepicker';
+
 import 'react-datepicker/dist/react-datepicker.css';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 interface IPlaceComponentProps {
@@ -23,10 +19,13 @@ export function PlaceComponent(props: IPlaceComponentProps) {
         <Card.Title as="h4">{place.title} </Card.Title>
       </Card.Header>
       <Card.Body>
-        <Card.Img>{place.image}</Card.Img>
+        {/* <Card.Img>{place.image}</Card.Img> */}
         <Card.Text as="h5">{place.description}</Card.Text>
 
-        <RatingComponent rating={place.rating}></RatingComponent>
+        <RatingComponent
+          rating={place.rating}
+          readonly={true}
+        ></RatingComponent>
         {/* <Card.Title>Select a Date</Card.Title>
         <Form>
           <Form.Group controlId="formDatePicker">
