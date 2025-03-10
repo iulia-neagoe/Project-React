@@ -4,4 +4,3 @@ export * from './lib/Game/Game';
 export * from './lib/TravelApp/Place/Place';
 export * from './lib/TravelApp/ListPlace/ListPlace';
 export * from './lib/TravelApp/AddPlace/AddPlace';
-export * from './lib/TravelApp/Alert/Alert';
