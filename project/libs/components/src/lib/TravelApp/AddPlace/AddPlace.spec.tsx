@@ -1,10 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-
 import { AddPlace } from './AddPlace';
 import { describe, it, vi } from 'vitest';
-
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import '@testing-library/user-event';
 import { IRatingProps } from '../Rating/Rating';
 vi.mock('../Rating/Rating', async (importoriginal) => {
   const module: object = await importoriginal();

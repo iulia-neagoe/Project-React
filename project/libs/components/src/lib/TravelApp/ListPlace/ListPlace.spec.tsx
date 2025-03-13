@@ -1,8 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import '@testing-library/user-event';
 import ListPlace from './ListPlace';
 
 describe('ListPlace', () => {

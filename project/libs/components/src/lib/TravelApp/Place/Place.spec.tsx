@@ -1,10 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { PlaceComponent } from './Place';
 import { describe, it, vi } from 'vitest';
-
 import '@testing-library/jest-dom/vitest';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import '@testing-library/user-event';
+
 const place = {
   title: 'New York',
   dateStart: new Date('2024-07-09'),
