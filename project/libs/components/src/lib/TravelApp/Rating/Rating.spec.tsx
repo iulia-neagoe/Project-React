@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import Rating from './Rating';
+import { RatingComponent } from './Rating';
 
 describe('Rating', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Rating />);
+    const { baseElement } = render(<RatingComponent rating={0} />);
     expect(baseElement).toBeTruthy();
   });
 });

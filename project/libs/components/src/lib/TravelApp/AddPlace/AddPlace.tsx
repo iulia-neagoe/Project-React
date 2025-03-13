@@ -71,7 +71,7 @@ export function AddPlace(props: IAddPlaceProps) {
       <Modal.Dialog>
         <form onSubmit={handleSubmit}>
           <Modal.Title>
-            <h1>Add Place</h1>
+            <h1> Add Place</h1>
           </Modal.Title>
           <Modal.Body>
             <Card>
@@ -82,6 +82,7 @@ export function AddPlace(props: IAddPlaceProps) {
                     type="text"
                     className="form-control"
                     value={title}
+                    data-testid="titleInput"
                     onChange={(e) => {
                       setTitle(e.target.value);
                       setErrors({ ...errors, title: '' });
@@ -97,9 +98,15 @@ export function AddPlace(props: IAddPlaceProps) {
                     type="text"
                     className="form-control"
                     value={description}
+                    data-testid="descriptionInput"
                     onChange={(e) => {
                       setDescription(e.target.value);
                       setErrors({ ...errors, description: '' });
+
+                      // const errorscopy = { ...errors };
+                      // if (description === '') {
+                      //   setErrors(errorscopy);
+                      // }
                     }}
                   />
                   {errors.description && (
@@ -112,6 +119,7 @@ export function AddPlace(props: IAddPlaceProps) {
                     type="date"
                     className="form-control"
                     value={parseDate(dateStart)}
+                    data-testid="dateStartInput"
                     onChange={(e) => {
                       setDateStart(new Date(e.target.value));
                       setErrors({ ...errors, dateStart: '' });
@@ -127,6 +135,7 @@ export function AddPlace(props: IAddPlaceProps) {
                     type="date"
                     className="form-control"
                     value={parseDate(dateEnd)}
+                    data-testid="dateEndInput"
                     onChange={(e) => {
                       setDateEnd(new Date(e.target.value));
                       setErrors({ ...errors, dateEnd: '' });
@@ -142,6 +151,7 @@ export function AddPlace(props: IAddPlaceProps) {
                     type="text"
                     className="form-control"
                     value={image}
+                    data-testid="ImageInput"
                     onChange={(e) => {
                       setImage(e.target.value);
                       setErrors({ ...errors, image: '' });
@@ -174,7 +184,7 @@ export function AddPlace(props: IAddPlaceProps) {
               </Button>
             </div>
             <Button type="submit" className="btn btn-primary">
-              Save changes
+              Submit
             </Button>
           </Modal.Footer>
         </form>

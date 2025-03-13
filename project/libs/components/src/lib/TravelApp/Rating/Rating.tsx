@@ -2,7 +2,7 @@ import { useState } from 'react';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { FaStar } from 'react-icons/fa';
 
-interface IRatingProps {
+export interface IRatingProps {
   rating: number;
   onRatingChange?: (rating: number) => void;
   readonly?: boolean;
