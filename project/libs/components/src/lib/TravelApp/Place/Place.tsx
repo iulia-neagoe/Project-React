@@ -6,12 +6,30 @@ import 'react-datepicker/dist/react-datepicker.css';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 interface IPlaceComponentProps {
   place: Place;
+  onDelete: (id: number) => void;
 }
 export function PlaceComponent(props: IPlaceComponentProps) {
   const place = props.place;
   // const handleRatingChange = (newRating: number) => {
   //   setRating(newRating);
   // };
+  const onDelete = async () => {
+    const id = place.id;
+    const url = `http://localhost:5001/api/Travelapp/${id}`;
+    try {
+      const response = await fetch(url, {
+        method: 'DELETE',
+      });
+      console.log(response);
+      if (response.ok) {
+        props.onDelete(id);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
+    }
+  };
 
   return (
     <Card style={{ width: '18rem' }} border="dark" className="shadow">
@@ -48,6 +66,7 @@ export function PlaceComponent(props: IPlaceComponentProps) {
         </Form> */}
         <div>Start date: {place.dateStart.toDateString()}</div>
         <div>End date: {place.dateEnd.toDateString()}</div>
+        <button onClick={onDelete}>Delete</button>
       </Card.Body>
     </Card>
   );

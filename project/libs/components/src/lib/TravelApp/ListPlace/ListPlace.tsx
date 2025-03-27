@@ -1,37 +1,63 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PlaceComponent } from '../Place/Place';
 import { Place } from '@project/models';
 import { Button } from '@trimbleinc/modus-react-bootstrap';
 import { AddPlace } from '../AddPlace/AddPlace';
 
 export function ListPlace() {
-  const [places, setPlaces] = useState<Place[]>([
-    {
-      title: 'New York',
-      dateStart: new Date('2024-07-09'),
-      dateEnd: new Date('2024-07-12'),
-      description: 'Business trip to New York',
-      image: undefined,
-      rating: 3,
-    },
-    {
-      title: 'Paris',
-      dateStart: new Date('2024-07-09'),
-      dateEnd: new Date('2025-07-12'),
-      description: 'Business trip to New York',
-      image: undefined,
-      rating: 5,
-    },
-  ]);
+  const [places, setPlaces] = useState<Place[]>([]);
   const [showAddPlace, setShowAddPlace] = useState(false);
   const clickAddPlace = () => {
     setShowAddPlace(true);
   };
+  //metoda 1
+  //function deletePlace() {}
+  //metoda2
+  const deletePlace = (id: number) => {
+    const placesCopy = [...places];
+    const filterArray = placesCopy.filter((place) => {
+      return place.id !== id;
+    });
+    setPlaces(filterArray);
+  };
 
+  //{}- obiecte
+  //[]-liste
+  useEffect(() => {
+    async function getData() {
+      const url = 'http://localhost:5001/api/Travelapp';
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Response status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const places: Place[] = data.map((item: Place) => ({
+          id: item.id,
+          title: item.title,
+          dateStart: new Date(item.dateStart),
+          dateEnd: new Date(item.dateEnd),
+          description: item.description,
+          image: item.image,
+          rating: item.rating,
+        }));
+
+        setPlaces(places);
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error(error.message);
+        }
+      }
+    }
+    getData();
+  }, []);
   return (
     <>
       {places.map((place) => {
-        return <PlaceComponent place={place}></PlaceComponent>;
+        return (
+          <PlaceComponent place={place} onDelete={deletePlace}></PlaceComponent>
+        );
       })}
       <div>
         <Button
@@ -58,6 +84,7 @@ export function ListPlace() {
                 setShowAddPlace(false);
               }}
               save={(
+                id: number,
                 title: string,
                 description: string,
                 dateStart: Date,
@@ -66,6 +93,7 @@ export function ListPlace() {
                 rating: number
               ) => {
                 const place = {
+                  id: id,
                   title: title,
                   description: description,
                   dateStart: dateStart,

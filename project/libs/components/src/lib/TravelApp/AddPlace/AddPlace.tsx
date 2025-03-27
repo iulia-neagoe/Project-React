@@ -1,11 +1,12 @@
 import { Alert, Button, Card, Modal } from '@trimbleinc/modus-react-bootstrap';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RatingComponent } from '../Rating/Rating';
 import { newDate, set } from 'react-datepicker/dist/date_utils';
 import { FormErrors, Place } from '@project/models';
 interface IAddPlaceProps {
   close: () => void;
   save: (
+    id: number,
     title: string,
     description: string,
     dateStart: Date,
@@ -36,17 +37,43 @@ export function AddPlace(props: IAddPlaceProps) {
     if (rating <= 0) newErrors.rating = 'Rating must be greater than 0';
     return newErrors;
   };
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const formErrors = validateForm();
+    const id = Math.floor(Math.random() * 100);
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
     } else {
       // Submit form
-      props.save(title, description, dateStart, dateEnd, image, rating);
+      props.save(id, title, description, dateStart, dateEnd, image, rating);
       props.close();
+      const url = 'http://localhost:5001/api/Travelapp';
+      try {
+        const body = {
+          id: id,
+          title: title,
+          dateStart: parseDate(dateStart),
+          dateEnd: parseDate(dateEnd),
+          description: description,
+          image: image,
+          rating: rating,
+        };
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        });
+        console.log(response);
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error(error.message);
+        }
+      }
     }
   };
+
   function parseDate(date: Date) {
     const year = date.getFullYear();
     const month = date.getMonth();
