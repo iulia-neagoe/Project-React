@@ -10,9 +10,6 @@ export function ListPlace() {
   const clickAddPlace = () => {
     setShowAddPlace(true);
   };
-  //metoda 1
-  //function deletePlace() {}
-  //metoda2
   const deletePlace = (id: number) => {
     const placesCopy = [...places];
     const filterArray = placesCopy.filter((place) => {
@@ -20,9 +17,6 @@ export function ListPlace() {
     });
     setPlaces(filterArray);
   };
-
-  //{}- obiecte
-  //[]-liste
   useEffect(() => {
     async function getData() {
       const url = 'http://localhost:5001/api/Travelapp';
@@ -60,23 +54,7 @@ export function ListPlace() {
         );
       })}
       <div>
-        <Button
-          //   onClick={() => {
-          //     const listCopy = [...places];
-          //     listCopy.push({
-          //       title: 'Romania',
-          //       dateStart: new Date(),
-          //       dateEnd: new Date('2024-07-12'),
-          //       description: 'Bucuresti',
-          //       image: undefined,
-          //       rating: 3,
-          //     });
-          //     setPlaces(listCopy);
-          //   }}
-          onClick={clickAddPlace}
-        >
-          Add Place
-        </Button>
+        <Button onClick={clickAddPlace}>Add Place</Button>
         {showAddPlace && (
           <div data-testid="testAddPlace">
             <AddPlace

@@ -31,7 +31,7 @@ export function AddPlace(props: IAddPlaceProps) {
     if (!description) newErrors.description = 'Description is required';
     if (!dateStart) newErrors.dateStart = 'Start Date is required';
     if (!dateEnd) newErrors.dateEnd = 'End Date is required';
-    if (dateEnd < dateStart)
+    if (dateEnd > dateStart)
       newErrors.dateEnd = 'End Date cannot be before Start Date';
     if (!image) newErrors.image = 'Image URL is required';
     if (rating <= 0) newErrors.rating = 'Rating must be greater than 0';
@@ -44,7 +44,6 @@ export function AddPlace(props: IAddPlaceProps) {
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
     } else {
-      // Submit form
       props.save(id, title, description, dateStart, dateEnd, image, rating);
       props.close();
       const url = 'http://localhost:5001/api/Travelapp';

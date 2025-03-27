@@ -1,18 +1,17 @@
 import Card from '@trimbleinc/modus-react-bootstrap/esm/Card';
 import { Place } from '@project/models';
 import { RatingComponent } from '../Rating/Rating';
+import { Button } from '@trimbleinc/modus-react-bootstrap';
+import { useState } from 'react';
+import { UpdatePlace } from '../UpdatePlace/UpdatePlace';
 
-import 'react-datepicker/dist/react-datepicker.css';
-// eslint-disable-next-line @nx/enforce-module-boundaries
 interface IPlaceComponentProps {
   place: Place;
   onDelete: (id: number) => void;
 }
 export function PlaceComponent(props: IPlaceComponentProps) {
   const place = props.place;
-  // const handleRatingChange = (newRating: number) => {
-  //   setRating(newRating);
-  // };
+  const [showEditPlace, setEditPlace] = useState(false);
   const onDelete = async () => {
     const id = place.id;
     const url = `http://localhost:5001/api/Travelapp/${id}`;
@@ -30,6 +29,9 @@ export function PlaceComponent(props: IPlaceComponentProps) {
       }
     }
   };
+  const clickEditPlace = () => {
+    showEditPlace(true);
+  };
 
   return (
     <Card style={{ width: '18rem' }} border="dark" className="shadow">
@@ -44,29 +46,12 @@ export function PlaceComponent(props: IPlaceComponentProps) {
           rating={place.rating}
           readonly={true}
         ></RatingComponent>
-        {/* <Card.Title>Select a Date</Card.Title>
-        <Form>
-          <Form.Group controlId="formDatePicker">
-            <Form.Label>From Date: </Form.Label>
-            <DatePicker
-              selected={startDate}
-              onChange={(date) => {
-                if (!date) {
-                  return;
-                }
-                setStartDate(date);
-              }}
-            />
-          </Form.Group>
-        </Form>
-        <Form>
-          <Form.Group controlId="formDatePicker">
-            <Form.Label>To Date:</Form.Label>
-          </Form.Group>
-        </Form> */}
         <div>Start date: {place.dateStart.toDateString()}</div>
         <div>End date: {place.dateEnd.toDateString()}</div>
-        <button onClick={onDelete}>Delete</button>
+        <Button onClick={onDelete}>Delete</Button>
+        <hr />
+        <Button onClick={clickEditPlace}>Edit</Button>
+        {showEditPlace && <UpdatePlace />}
       </Card.Body>
     </Card>
   );
