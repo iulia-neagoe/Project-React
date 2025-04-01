@@ -46,11 +46,39 @@ export function ListPlace() {
     }
     getData();
   }, []);
+  const updatePlace = (
+    id: number,
+    title: string,
+    description: string,
+    dateStart: Date,
+    dateEnd: Date,
+    rating: number,
+    image?: string
+  ) => {
+    const updatePlaceCopy = [...places];
+
+    const placeToUpdate = updatePlaceCopy.find((place) => place.id === id);
+    if (!placeToUpdate) {
+      console.error('Place not found');
+      return;
+    }
+    placeToUpdate.title = title;
+    placeToUpdate.description = description;
+    placeToUpdate.dateStart = dateStart;
+    placeToUpdate.dateEnd = dateEnd;
+    placeToUpdate.rating = rating;
+    placeToUpdate.image = image;
+    setPlaces(updatePlaceCopy);
+  };
   return (
     <>
       {places.map((place) => {
         return (
-          <PlaceComponent place={place} onDelete={deletePlace}></PlaceComponent>
+          <PlaceComponent
+            place={place}
+            onDelete={deletePlace}
+            onUpdate={updatePlace}
+          ></PlaceComponent>
         );
       })}
       <div>

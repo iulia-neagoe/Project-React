@@ -31,8 +31,13 @@ export function AddPlace(props: IAddPlaceProps) {
     if (!description) newErrors.description = 'Description is required';
     if (!dateStart) newErrors.dateStart = 'Start Date is required';
     if (!dateEnd) newErrors.dateEnd = 'End Date is required';
-    if (dateEnd > dateStart)
+    if (
+      dateEnd &&
+      dateStart &&
+      new Date(dateEnd).getTime() < new Date(dateStart).getTime()
+    ) {
       newErrors.dateEnd = 'End Date cannot be before Start Date';
+    }
     if (!image) newErrors.image = 'Image URL is required';
     if (rating <= 0) newErrors.rating = 'Rating must be greater than 0';
     return newErrors;
@@ -75,14 +80,14 @@ export function AddPlace(props: IAddPlaceProps) {
 
   function parseDate(date: Date) {
     const year = date.getFullYear();
-    const month = date.getMonth();
+    const month = date.getMonth() + 1; // Months are zero-based in JavaScript
     let monthString;
     if (month.toString().length === 1) {
       monthString = '0' + month.toString();
     } else {
       monthString = month.toString();
     }
-    const day = date.getDay();
+    const day = date.getDate();
     let dayString;
     if (day.toString().length === 1) {
       dayString = '0' + day.toString();

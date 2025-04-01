@@ -4,14 +4,25 @@ import { RatingComponent } from '../Rating/Rating';
 import { Button } from '@trimbleinc/modus-react-bootstrap';
 import { useState } from 'react';
 import { UpdatePlace } from '../UpdatePlace/UpdatePlace';
+import { set } from 'react-datepicker/dist/date_utils';
+import { on } from 'events';
 
 interface IPlaceComponentProps {
   place: Place;
   onDelete: (id: number) => void;
+  onUpdate: (
+    id: number,
+    title: string,
+    description: string,
+    dateStart: Date,
+    dateEnd: Date,
+    rating: number,
+    image?: string
+  ) => void;
 }
 export function PlaceComponent(props: IPlaceComponentProps) {
   const place = props.place;
-  const [showEditPlace, setEditPlace] = useState(false);
+  const [showEditPlace, setShowEditPlace] = useState(false);
   const onDelete = async () => {
     const id = place.id;
     const url = `http://localhost:5001/api/Travelapp/${id}`;
@@ -30,7 +41,7 @@ export function PlaceComponent(props: IPlaceComponentProps) {
     }
   };
   const clickEditPlace = () => {
-    showEditPlace(true);
+    setShowEditPlace(true);
   };
 
   return (
@@ -51,7 +62,15 @@ export function PlaceComponent(props: IPlaceComponentProps) {
         <Button onClick={onDelete}>Delete</Button>
         <hr />
         <Button onClick={clickEditPlace}>Edit</Button>
-        {showEditPlace && <UpdatePlace />}
+        {showEditPlace && (
+          <UpdatePlace
+            place={place}
+            close={() => {
+              setShowEditPlace(false);
+            }}
+            update={props.onUpdate}
+          />
+        )}
       </Card.Body>
     </Card>
   );
